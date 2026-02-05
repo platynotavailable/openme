@@ -93,7 +93,8 @@ reveal.addEventListener("click", () => {
   secret.innerText = "❌ ERROR 404: Love not found...";
 
   setTimeout(() => {
-    const msg = "You’re the best thing that happened to me ❤️ I want you forever 💍";
+    const msg = "    You’re the best thing that happened to me… and I just wanted you to know that ❤️.
+    I want you in my life forever 💟 as my gilfriend, my wife, my mommie obv and most importantly....my best friend 💝";
     secret.innerText = "";
     let i = 0;
 
