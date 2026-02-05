@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 30);
 
   // ELEMENTS
-  const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
   const letter = document.getElementById("letter");
   const next1 = document.getElementById("next1");
   const heartsPage = document.getElementById("heartsPage");
