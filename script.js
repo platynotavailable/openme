@@ -83,25 +83,29 @@ next2.addEventListener("click", () => {
 
 reveal.addEventListener("click", () => {
   reveal.disabled = true;
-  secret.innerText = "❌ ERROR 404: Love not found...";
   secret.classList.remove("hidden");
 
+  // Step 1: show fake error
+  secret.innerText = "❌ ERROR 404: Love not found...";
+  
+  // Step 2: after 2 seconds, start typing real message
   setTimeout(() => {
     const msg = " You’re the best thing that happened to me…  
     and I just wanted you to know that ❤️. I want you in my life forever 💟
-    as my gilfriend, my wife, my mommie obv and most importantly....my best friend 💝";
+    as my gilfriend, my wife, my mommie obv and most importantly....my best friend 💝💍";
     secret.innerText = "";
     let i = 0;
+
     function type() {
       if (i < msg.length) {
         secret.innerText += msg.charAt(i);
         i++;
-        setTimeout(type, 50);
+        setTimeout(type, 60);
       }
     }
     type();
   }, 2000);
-});
+});;
 
 // CONFETTI
 function confettiBoom() {
