@@ -34,7 +34,8 @@ button {
 }
 
 #yes { background: #ff4d6d; color: white; }
-#no { background: #555; color: white; position: absolute; }
+#no { background: #555; color: white; }
+
 
 .paper {
   background: #fffaf0;
