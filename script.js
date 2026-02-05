@@ -45,25 +45,21 @@ const music = document.getElementById("bgMusic");
 
 let yesMoves = 0;
 
-// NO runs
-document.addEventListener("mousemove", (e) => {
-  const rect = noBtn.getBoundingClientRect();
-  const distance = Math.hypot(e.clientX - rect.left, e.clientY - rect.top);
-  if (distance < 100) moveNo();
-});
+// NO button runs away
+noBtn.addEventListener("mouseover", moveNo);
 
 function moveNo() {
   noBtn.style.position = "absolute";
-  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-  noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+  noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+  noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
 }
 
-// YES dodges
+// YES dodges first, then works
 yesBtn.addEventListener("mouseover", () => {
-  if (yesMoves < 5) {
+  if (yesMoves < 4) {
     yesBtn.style.position = "absolute";
-    yesBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-    yesBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+    yesBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+    yesBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
     yesMoves++;
   }
 });
