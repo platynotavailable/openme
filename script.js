@@ -1,22 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // SAFE love counter (only runs if element exists)
-  const counterEl = document.getElementById("loveCounter");
-  if (counterEl) {
-    const loveStart = new Date("2025-09-21T00:00:00");
+  // LOVE COUNTER
+  const loveStart = new Date("2025-09-21T00:00:00");
 
-    setInterval(() => {
-      const now = new Date();
-      const diff = now - loveStart;
+  setInterval(() => {
+    const now = new Date();
+    const diff = now - loveStart;
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / (1000 * 60)) % 60);
 
-      counterEl.innerText =
-        `I’ve loved you for: ${days} days ${hours} hrs ${mins} mins ❤️`;
-    }, 1000);
-  }
+    document.getElementById("loveCounter").innerText =
+      `I’ve loved you for: ${days} days ${hours} hrs ${mins} mins ❤️`;
+  }, 1000);
 
   // LOADER
   let progress = 0;
@@ -24,21 +21,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadingPage = document.getElementById("loadingPage");
   const container = document.getElementById("container");
 
-  if (progressBar && loadingPage && container) {
-    let loader = setInterval(() => {
-      progress++;
-      progressBar.style.width = progress + "%";
+  let loader = setInterval(() => {
+    progress++;
+    progressBar.style.width = progress + "%";
 
-      if (progress >= 100) {
-        clearInterval(loader);
-        loadingPage.classList.add("hidden");
-        container.classList.remove("hidden");
-      }
-    }, 30);
-  }
+    if (progress >= 100) {
+      clearInterval(loader);
+      loadingPage.classList.add("hidden");
+      container.classList.remove("hidden");
+    }
+  }, 30);
 
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
+  // ELEMENTS
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
   const letter = document.getElementById("letter");
   const next1 = document.getElementById("next1");
   const heartsPage = document.getElementById("heartsPage");
@@ -50,9 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let yesMoves = 0;
 
-  // NO button runs
+  // NO button runs away
   document.addEventListener("mousemove", (e) => {
-    if (!noBtn) return;
     const rect = noBtn.getBoundingClientRect();
     const distance = Math.hypot(e.clientX - rect.left, e.clientY - rect.top);
     if (distance < 100) moveNo();
@@ -65,98 +60,83 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // YES moves 5 times
-  if (yesBtn) {
-    yesBtn.addEventListener("mouseover", () => {
-      if (yesMoves < 5) {
-        yesBtn.style.position = "absolute";
-        yesBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-        yesBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
-        yesMoves++;
-      }
+  yesBtn.addEventListener("mouseover", () => {
+    if (yesMoves < 5) {
+      yesBtn.style.position = "absolute";
+      yesBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+      yesBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+      yesMoves++;
+    }
+  });
+
+  // YES click
+  yesBtn.addEventListener("click", () => {
+    confettiBoom();
+
+    container.classList.add("hidden");
+    letter.classList.remove("hidden");
+
+    music.play().catch(() => {
+      alert("Tap screen once to allow music 🎵");
     });
+  });
 
-    yesBtn.addEventListener("click", () => {
-      confettiBoom();
-      container.classList.add("hidden");
-      letter.classList.remove("hidden");
+  // NEXT pages
+  next1.addEventListener("click", () => {
+    letter.classList.add("hidden");
+    heartsPage.classList.remove("hidden");
+  });
 
-      if (music) {
-        music.play().catch(() => {
-          alert("Tap screen once to allow music 🎵");
-        });
-      }
-    });
-  }
+  next2.addEventListener("click", () => {
+    heartsPage.classList.add("hidden");
+    secretPage.classList.remove("hidden");
+  });
 
-  if (next1) {
-    next1.addEventListener("click", () => {
-      letter.classList.add("hidden");
-      heartsPage.classList.remove("hidden");
-    });
-  }
+  // SECRET reveal
+  reveal.addEventListener("click", () => {
+    reveal.disabled = true;
+    reveal.innerText = "Loading…";
 
-  if (next2) {
-    next2.addEventListener("click", () => {
-      heartsPage.classList.add("hidden");
-      secretPage.classList.remove("hidden");
-    });
-  }
+    secret.classList.add("hidden");
 
-  if (reveal) {
-    reveal.addEventListener("click", () => {
-      reveal.disabled = true;
-      reveal.innerText = "Loading…";
+    setTimeout(() => {
+      secret.classList.remove("hidden");
+      typeText(secret, "You’re the best thing that happened to me ❤️ I want you forever 💖", 50);
+    }, 1500);
+  });
 
-      secret.classList.add("hidden");
-      secret.innerText = "❌ ERROR 404: Love not found...";
+  // CONFETTI
+  function confettiBoom() {
+    for (let i = 0; i < 150; i++) {
+      let c = document.createElement("div");
+      c.innerText = "🎉";
+      c.style.position = "fixed";
+      c.style.left = Math.random() * window.innerWidth + "px";
+      c.style.top = "-20px";
+      c.style.fontSize = Math.random() * 20 + 15 + "px";
+      c.style.zIndex = 9999;
+      document.body.appendChild(c);
+
+      let fall = setInterval(() => {
+        c.style.top = c.offsetTop + 4 + "px";
+      }, 10);
 
       setTimeout(() => {
-        secret.classList.remove("hidden");
-      }, 1500);
+        clearInterval(fall);
+        c.remove();
+      }, 3000);
+    }
+  }
 
-      setTimeout(() => {
-        const message = `You’re the best thing that happened to me ❤️ 
-and I just wanted you to know that 💞 
-I want you in my life forever 💍  
-as my girlfriend, my wife, my mommie 
-and most importantly, my best friend 💖`;
-
-        secret.innerText = "";
-        let i = 0;
-        document.body.classList.add("rainbow");
-
-        function typeEffect() {
-          if (i < message.length) {
-            secret.innerText += message.charAt(i);
-            i++;
-            setTimeout(typeEffect, 50);
-          }
-        }
-        typeEffect();
-      }, 3500);
-    });
+  // TYPE EFFECT
+  function typeText(element, text, speed = 50) {
+    element.innerText = "";
+    let i = 0;
+    let typer = setInterval(() => {
+      element.innerText += text.charAt(i);
+      i++;
+      if (i >= text.length) clearInterval(typer);
+    }, speed);
   }
 
 });
-
-function confettiBoom() {
-  for (let i = 0; i < 150; i++) {
-    let c = document.createElement("div");
-    c.innerText = "🎉";
-    c.style.position = "fixed";
-    c.style.left = Math.random() * window.innerWidth + "px";
-    c.style.top = "-20px";
-    c.style.fontSize = Math.random() * 20 + 15 + "px";
-    c.style.zIndex = 9999;
-    document.body.appendChild(c);
-
-    let fall = setInterval(() => {
-      c.style.top = c.offsetTop + 4 + "px";
-    }, 10);
-
-    setTimeout(() => {
-      clearInterval(fall);
-      c.remove();
-    }, 3000);
-  }
-}
