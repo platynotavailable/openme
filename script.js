@@ -87,9 +87,7 @@ reveal.addEventListener("click", () => {
   secret.classList.remove("hidden");
 
   setTimeout(() => {
-    const msg = " You’re the best thing that happened to me…  
-    and I just wanted you to know that ❤️. I want you in my life forever 💟
-    as my gilfriend, my wife, my mommie obv and most importantly....my best friend 💝";
+    const msg = "You’re the best thing that happened to me ❤️ and I want you forever to be my girlfriend🤍, my furture wifey💗 and most importantly, my bestfriend...💟";
     secret.innerText = "";
     let i = 0;
     function type() {
